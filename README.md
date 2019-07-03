@@ -1,0 +1,3 @@
+# A toy version of the CMS SiStripClusterizerFromRaw producer
+
+This is a toy version of the CMS online SiStripClusterizerFromRaw producer that unpacks the silicon strip raw data and produces strip clusters.  It has been stripped down to just the primary code path and separated from the CMSSW machinery.  Included in the files "stripdata.bin" and "stripdets.bin" are the raw data and the detector calibrations (noise threshold, channel gains, etc.) for the strips included in the raw data sample.  Data are from one event from a sample of TTbar simulated events with pileup 70.  Results are not exactly the same as the actual SiStripClusterizerFromRaw produces due to some minor simplifications, but should be very close.

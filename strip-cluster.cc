@@ -67,6 +67,7 @@ FEDSet fillFeds()
 std::vector<SiStripCluster>
 fillClusters(detId_t idet, Clusterizer& clusterizer, Clusterizer::State& state, const std::vector<FEDChannel>& channels)
 {
+  bool first = true;
   std::vector<SiStripCluster> out;
 
   auto const & det = clusterizer.stripByStripBegin(idet);
@@ -78,6 +79,18 @@ fillClusters(detId_t idet, Clusterizer& clusterizer, Clusterizer::State& state, 
     unpackZS(chan, chan.iPair()*256, perStripAdder, idet);
   }
   clusterizer.stripByStripEnd(state, out);
+
+  if (first) {
+    first = false;
+    std::cout << "Printing clusters for detid " << idet << std::endl;
+    for (const auto& cluster : out) {
+      std::cout << "Cluster " << cluster.firstStrip() << ": ";
+      for (const auto& ampl : cluster.amplitudes()) {
+        std::cout << (int) ampl << " ";
+      }
+      std::cout << std::endl;
+    }
+  }
 
   return out;
 }
