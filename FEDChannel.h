@@ -1,6 +1,7 @@
 #pragma once
 
-#include <fstream>
+#include <memory>
+
 #include "Clusterizer.h"
 
 //holds information about position of a channel in the buffer for use by unpacker

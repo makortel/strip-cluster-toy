@@ -35,7 +35,6 @@ Clusterizer::Det::Det(detId_t detid, std::ifstream& file)
     for (const auto& det : dets) {
       //std::cout << det.strip_ << " ";
       auto ind = det.strip_-offset_;
-      assert(ind >= 0 && ind < strips_.size());
       strips_[det.strip_-offset_] = det;
     }
     //std::cout << std::endl;

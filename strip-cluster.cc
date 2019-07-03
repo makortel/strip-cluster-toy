@@ -67,7 +67,7 @@ FEDSet fillFeds()
 std::vector<SiStripCluster>
 fillClusters(detId_t idet, Clusterizer& clusterizer, Clusterizer::State& state, const std::vector<FEDChannel>& channels)
 {
-  bool first = true;
+  static bool first = true;
   std::vector<SiStripCluster> out;
 
   auto const & det = clusterizer.stripByStripBegin(idet);
