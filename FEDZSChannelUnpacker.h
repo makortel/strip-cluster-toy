@@ -8,7 +8,7 @@ public:
   uint8_t sampleNumber() const;
   uint8_t adc() const;
   uint16_t adcPreMix() const;
-  bool hasData() const;
+  bool hasData(uint16_t extra = 0) const;
   FEDZSChannelUnpacker& operator ++ ();
   FEDZSChannelUnpacker& operator ++ (int);
 private:
@@ -66,9 +66,9 @@ inline uint16_t FEDZSChannelUnpacker::adcPreMix() const
   return ( data_[currentOffset_^7] + ((data_[(currentOffset_+1)^7]&0x03)<<8) );
 }
 
-inline bool FEDZSChannelUnpacker::hasData() const
+inline bool FEDZSChannelUnpacker::hasData(uint16_t extra) const
 {
-  return (currentOffset_<channelPayloadOffset_+channelPayloadLength_);
+  return (currentOffset_+extra < channelPayloadOffset_+channelPayloadLength_);
 }
 
 inline FEDZSChannelUnpacker& FEDZSChannelUnpacker::operator ++ ()
@@ -79,7 +79,7 @@ inline FEDZSChannelUnpacker& FEDZSChannelUnpacker::operator ++ ()
     valuesLeftInCluster_--;
   } else {
     currentOffset_ += offsetIncrement_;
-    if (hasData()) {
+    if (hasData(2)) {
       const uint8_t oldStrip = currentStrip_;
       readNewClusterInfo();
     }
