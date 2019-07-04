@@ -1,6 +1,7 @@
 #include <fstream>
 #include <iostream>
 #include <algorithm>
+#include <chrono>
 
 #include "Clusterizer.h"
 #include "FEDChannel.h"
@@ -101,9 +102,12 @@ int main()
   Clusterizer::State state;
 
   FEDSet feds(fillFeds());
+  const auto start = std::chrono::high_resolution_clock::now();
   for (auto idet : clusterizer.allDetIds()) {
     if (feds.find(idet) != feds.end()) {
       auto out = fillClusters(idet, clusterizer, state, feds[idet]);
     }
   }
+  const auto stop = std::chrono::high_resolution_clock::now();
+  std::cout << "Took " << std::chrono::duration_cast<std::chrono::microseconds>(stop-start).count() << " us" << std::endl;
 }
